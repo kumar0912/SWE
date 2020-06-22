@@ -85,6 +85,6 @@ def validate_request(dict):
            return 0
        if dict["total"]!=dict["total_expenditure"]:
            return 0
-       if(!check_supplies(dict))
+       if check_supplies(dict)==0:
            return 0
        return 1
