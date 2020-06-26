@@ -85,6 +85,10 @@ def update_database_2(a,b):
     #update_database_
     return 1
 
+def transfer(dict):
+    #do the transfer depending on the conditions
+    return 1
+
 def validate_request(dict):
 #missing info unit test
     if dict["type"] == "R":
@@ -111,6 +115,7 @@ def validate_request(dict):
        if check_correct_advance_info_database(dict["name"],dict["designation"]):
            return 0
        update_database_2(dict["name"],dict["designation"])
+       transfer(dict)
        return 1
 
 
