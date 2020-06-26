@@ -25,7 +25,7 @@ def settle_form():
         detail["supplier_name"] = input("Supplier's Name: ")
         detail["particulars"] = input("Particulars: ")
         detail["amount"] = input("Amount: ")
-        dict["total"]+=detail["amount"]
+        dict["total"]+=float(detail["amount"])
         detail["stock_register"] = input("Stock Register: ")
         dict["suppliers"].append(detail)
     dict["date"] = input("Today's Date(format = dd/mm/yy): ")

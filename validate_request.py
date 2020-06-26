@@ -1,8 +1,8 @@
 import re
-
+import random
 def invalidstr(s):
     ok=0
-    if len(s)<=2:
+    if len(s)<=1:
         return 1
     s= s.lower()
     for char in s:
@@ -46,7 +46,6 @@ def invalidifsc(ifsc):
 def invaliddate(date):
     if date=="":
         return 1
-    date=input("Enter the date: ")
     dd,mm,yy=date.split('/')
     dd=int(dd)
     mm=int(mm)
@@ -66,25 +65,58 @@ def invaliddate(date):
     return 0
 
 def check_supplies(dict):
-    for suppliers_count in range(dict["number_of_suppliers"]):
+    for suppliers_count in range(int(dict["number_of_suppliers"])):
         if invaliddate(dict["suppliers"][suppliers_count]["date"]) or invalidint(dict["suppliers"][suppliers_count]["receipt_number"]) or invalidstr(dict["suppliers"][suppliers_count]["supplier_name"]) or invalidstr(dict["suppliers"][suppliers_count]["particulars"]) or invalidint(dict["suppliers"][suppliers_count]["amount"]) or invalidint(dict["suppliers"][suppliers_count]["stock_register"]):
             return 0
         return 1
+
+def check_pending_advance_database(a,b):
+    return random.randint(0,1)
+
+def check_correct_advance_info_database(a,b):
+    return random.randint(0,1)
+
+def update_database_1(a,b):
+   # update_database_
+   return 1
+
+
+def update_database_2(a,b):
+    #update_database_
+    return 1
+
 def validate_request(dict):
 #missing info unit test
     if dict["type"] == "R":
-        if dict["name"]=="" or dict["designation"]==""  or dict["file_number"]=="" or dict["purpose"]=="" or dict["amount"]=="" or dict["sanction_number"]=="" or dict["budget_available"]=="" or dict["account_holder_name"]=="" or dict["account_number"]=="" or dict["branch_name"]=="" or dict["ifsc_code"]=="" or dict["date"]=="" or dict["from"]!="1" or dict["from"]!="2" or dict["from"]!="3" or dict["head"]!="1" or dict["head"]!="2" or dict["head"]!="3" or dict["head"]!="4" or dict["head"]!="5" :
+        if dict["name"]=="" or dict["designation"]==""  or dict["file_number"]=="" or dict["purpose"]=="" or dict["amount"]=="" or dict["sanction_number"]=="" or dict["budget_available"]=="" or dict["account_holder_name"]=="" or dict["account_number"]=="" or dict["branch_name"]=="" or dict["ifsc_code"]=="" or dict["date"]=="" or ( dict["from"]!="1" and dict["from"]!="2" and dict["from"]!="3" ) or ( dict["head"]!="1" and dict["head"]!="2" and dict["head"]!="3" and dict["head"]!="4" and dict["head"]!="5" ):
           return 0
 #invalid/incorrect info
-        if invalidstr(dict["name"]) or invalidstr(dict["designation"]) or invalidint(dict["file_number"]) or invalidstr(dict["purpose"]) or invalidstr(dict["from_specify"]) or invalidstr(dict["head_specify"]) or invalidint(dict["amount"]) or invalidint(dict["sanction_number"]) or invalidint(dict["budget_available"]) or invalidstr(dict["account_holder_name"]) or invalid_account_number(dict["file_number"]) or invalidstr(dict["bank_name"]) or invalidstr(dict["branch_name"]) or invalidifsc(dict["file_number"]) or invaliddate(dict["date"]) :
+        if invalidstr(dict["name"]) or invalidstr(dict["designation"]) or invalidint(dict["file_number"]) or invalidstr(dict["purpose"]) or invalidstr(dict["from_specify"]) or invalidstr(dict["head_specify"]) or invalidint(dict["amount"]) or invalidint(dict["sanction_number"]) or invalidint(dict["budget_available"]) or invalidstr(dict["account_holder_name"]) or invalid_account_number(dict["account_number"]) or invalidstr(dict["bank_name"]) or invalidstr(dict["branch_name"]) or invalidifsc(dict["ifsc_code"]) or invaliddate(dict["date"]) :
             return 0
+        if(check_pending_advance_database(dict["name"],dict["designation"])):
+            return 0
+        update_database_1(dict["name"],dict["designation"])
         return 1
 
     elif dict["type"] == "S":
-       if invalidstr(dict["name"]) or invalidstr(dict["designation"])or invalidint(dict["file_number"])or invalidstr(dict["purpose"]) or invalidstr(dict["head_specify"]) or invalidint(dict["sanction_number"]) or invalidint(dict["amount"]) or invaliddate(dict["date"]) or invalidint(dict["total_expenditure"]) or invalidint(dict["excess"]) or invalidint(dict["number_of_suppliers"]) or dict["date"] :
+       if invalidstr(dict["name"]) or invalidstr(dict["designation"])or invalidint(dict["file_number"])or invalidstr(dict["purpose"]) or invalidstr(dict["head_specify"]) or invalidint(dict["sanction_number"]) or invalidint(dict["amount"]) or invaliddate(dict["date"]) or invalidint(dict["total_expenditure"]) or invalidint(dict["excess"]) or invalidint(dict["number_of_suppliers"]) or invaliddate(dict["date"]) :
+           print("1$")
            return 0
-       if dict["total"]!=dict["total_expenditure"]:
+       if dict["total"]!=float(dict["total_expenditure"]):
+           print("2$")
            return 0
        if check_supplies(dict)==0:
+           print("3$")
            return 0
+       if check_correct_advance_info_database(dict["name"],dict["designation"]):
+           return 0
+       update_database_2(dict["name"],dict["designation"])
        return 1
+
+
+#31834212565
+
+#request = {"type":"R","name":"kp","designation":"student","file_number":"1","purpose":"stationary","from":"1","from_specify":"Initialised","head":"1","head_specify":"Initialised","amount":"120","sanction_number":"1","budget_available":"12","account_holder_name":"kp","account_number":"31834212565","bank_name":"SBI","branch_name":"BORINGROAD","ifsc_code":"SBIN0014892","date":"09/02/2000"}
+#print(validate_request(request))
+
+#SBIN0014892
